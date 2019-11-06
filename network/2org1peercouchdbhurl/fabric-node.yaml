@@ -1,0 +1,186 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Fabric
+version: "1.0"
+mutual-tls: false
+
+caliper:
+  blockchain: fabric
+  command:
+    start: docker-compose -f network/2org1peercouchdbhurl/docker-compose.yaml up -d;sleep 3s
+    end: docker-compose -f network/2org1peercouchdbhurl/docker-compose.yaml down;(test -z \"$(docker ps -aq)\") || docker rm $(docker ps -aq);(test -z \"$(docker images dev* -q)\") || docker rmi $(docker images dev* -q);rm -rf /tmp/hfc-*
+
+info:
+  Version: 1.4.0
+  Size: 2 Orgs with 1 Peer
+  Orderer: Solo
+  Distribution: Single Host
+  StateDB: CouchDB
+
+clients:
+  caliper.org1:
+    client:
+      organization: org1MSP
+      credentialStore:
+        path: /Users/yojee/hyperledger-fabric-network/.hfc-org1 
+        cryptoStore:
+          path: /Users/yojee/hyperledger-fabric-network/.hfc-org1
+      clientPrivateKey:
+        pem: "-----BEGIN PRIVATE KEY-----\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgoa4UMo1/QlcfgGug\r\nc15WpIWfYRKdRwFiXte9ADITqwihRANCAAR6QmseGdsg8e0OutmWDQdrp9U4ZSNr\r\njdRSOUaK84+7iwg9Ehp5Nm09DOGkkpOPxWFERWB+ADkikunA1CyZeojB\r\n-----END PRIVATE KEY-----\r\n"
+      clientSignedCert:
+        pem: "-----BEGIN CERTIFICATE-----\nMIIENTCCA9ygAwIBAgIUVp787Xxg8S1oX2UGKu5aFGU8XJYwCgYIKoZIzj0EAwIw\ncTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\nbiBGcmFuY2lzY28xGDAWBgNVBAoTD29yZzEuaHVybGV5LmxhYjEbMBkGA1UEAxMS\nY2Eub3JnMS5odXJsZXkubGFiMB4XDTE5MTEwMTA2NTAwMFoXDTIwMTAzMTA2NTUw\nMFowVTE1MDMGA1UECxMsY2xpZW50LHVzZXIscGVlcix2YWxpZGF0b3IsYXVkaXRv\ncixjYSxtZW1iZXIxHDAaBgNVBAMME2NrYW5fY2FsaXBlcjJfYWRtaW4wWTATBgcq\nhkjOPQIBBggqhkjOPQMBBwNCAAR6QmseGdsg8e0OutmWDQdrp9U4ZSNrjdRSOUaK\n84+7iwg9Ehp5Nm09DOGkkpOPxWFERWB+ADkikunA1CyZeojBo4ICbDCCAmgwDgYD\nVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFLBJqW1hWFRoAHRY\nXujeM1RJ7rcvMCsGA1UdIwQkMCKAIL9kqIzJUWYLurCwcKFkWscQVrRH4RtCFZUU\nDMNhIHV+MIIB+gYIKgMEBQYHCAEEggHseyJhdHRycyI6eyJhZG1pbiI6InRydWUi\nLCJjYXRlZ29yeSI6ImNhbGlwZXIiLCJkZXNjcmlwdGlvbiI6ImNrYW4gY2FsaXBl\ncjIiLCJkb21haW4iOiJodHRwOi8vY2FsaXBlcjo1MDAwIiwiZW1haWwiOiJja2Fu\nY2FsaXBlckBnbWFpbC5jb20iLCJoZi5BZmZpbGlhdGlvbiI6IiIsImhmLkVucm9s\nbG1lbnRJRCI6ImNrYW5fY2FsaXBlcjJfYWRtaW4iLCJoZi5SZWdpc3RyYXIuQXR0\ncmlidXRlcyI6IioiLCJoZi5SZWdpc3RyYXIuRGVsZWdhdGVSb2xlcyI6ImNsaWVu\ndCx1c2VyLHZhbGlkYXRvcixhdWRpdG9yIiwiaGYuUmVnaXN0cmFyLlJvbGVzIjoi\nY2xpZW50LHVzZXIscGVlcix2YWxpZGF0b3IsYXVkaXRvcixjYSIsImhmLlJldm9r\nZXIiOiJ0cnVlIiwiaGYuVHlwZSI6ImNsaWVudCx1c2VyLHBlZXIsdmFsaWRhdG9y\nLGF1ZGl0b3IsY2EsbWVtYmVyIiwibmFtZSI6ImNrYW4gY2FsaXBlcjIiLCJwb3J0\nYWwiOiJja2FuIGNhbGlwZXIyIiwicm9sZSI6ImFkbWluIn19MAoGCCqGSM49BAMC\nA0cAMEQCICXEi1JWnVc+3aKJIyabBFIAUhU4lAk/wRHCwA8ieNOAAiAwhI0wALA5\nhh/NtL1ps2A+SpW67TItoYeAASqawsD6yg==\n-----END CERTIFICATE-----\n"
+  ckan.user.org1:
+    client:
+      organization: org1MSP
+      credentialStore:
+        path: /Users/yojee/hyperledger-fabric-network/.hfc-org1 
+        cryptoStore:
+          path: /Users/yojee/hyperledger-fabric-network/.hfc-org1
+      clientPrivateKey:
+        pem: "-----BEGIN PRIVATE KEY-----\r\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgOScfdos0/3EgC26W\r\nwtQG68yOcGv5QaUc38yoguSNGU6hRANCAATyf0X4tR3gqpw/ROyd/KTgd2c2Fk5+\r\nx7keb0AMTIHIJVh0l0f2Rc7gJHhJXnKBQw0xrZD160tLPBGEnBVgecc8\r\n-----END PRIVATE KEY-----\r\n"
+      clientSignedCert:
+        pem: "-----BEGIN CERTIFICATE-----\nMIIDLjCCAtWgAwIBAgIUFQ4zNv2E3bQ63qeVY4sWnqTz9sswCgYIKoZIzj0EAwIw\ncTELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\nbiBGcmFuY2lzY28xGDAWBgNVBAoTD29yZzEuaHVybGV5LmxhYjEbMBkGA1UEAxMS\nY2Eub3JnMS5odXJsZXkubGFiMB4XDTE5MTEwMTA3MzgwMFoXDTIwMTAzMTA3NDMw\nMFowLTENMAsGA1UECxMEdXNlcjEcMBoGA1UEAwwTY2thbnVzZXIxQGdtYWlsLmNv\nbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPJ/Rfi1HeCqnD9E7J38pOB3ZzYW\nTn7HuR5vQAxMgcglWHSXR/ZFzuAkeElecoFDDTGtkPXrS0s8EYScFWB5xzyjggGN\nMIIBiTAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUFGWC\nwCZOIG07qrJuRvU9JHqwvSIwKwYDVR0jBCQwIoAgv2SojMlRZgu6sLBwoWRaxxBW\ntEfhG0IVlRQMw2EgdX4wggEbBggqAwQFBgcIAQSCAQ17ImF0dHJzIjp7ImFkbWlu\nIjoiZmFsc2UiLCJoZi5BZmZpbGlhdGlvbiI6IiIsImhmLkVucm9sbG1lbnRJRCI6\nImNrYW51c2VyMUBnbWFpbC5jb20iLCJoZi5SZWdpc3RyYXIuQXR0cmlidXRlcyI6\nIioiLCJoZi5SZWdpc3RyYXIuRGVsZWdhdGVSb2xlcyI6ImNsaWVudCx1c2VyIiwi\naGYuUmVnaXN0cmFyLlJvbGVzIjoiY2xpZW50LHVzZXIiLCJoZi5SZXZva2VyIjoi\ndHJ1ZSIsImhmLlR5cGUiOiJ1c2VyIiwidXNlcm5hbWUiOiJcImNrYW51c2VyMUBn\nbWFpbC5jb21cIiJ9fTAKBggqhkjOPQQDAgNHADBEAiBlw07h/C8O7eFElBWzRDnw\ntgu1u54XAGdYAZJKyB+BigIga1HDoSeKPw/Z1UAX8LGTIRHtZ8wa67VWS7F3ctYb\nmlE=\n-----END CERTIFICATE-----\n"
+  user1.org1:
+    client:
+      organization: org1MSP
+      credentialStore:
+        path: /Users/yojee/hyperledger-fabric-network/.hfc-org1 
+        cryptoStore:
+          path: /Users/yojee/hyperledger-fabric-network/.hfc-org1
+      clientPrivateKey:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org1.hurley.lab/users/User1@org1.hurley.lab/msp/keystore/14f94fc1628a2a517623aaca1d54380578ad3740b58626a4415b5f10739af883_sk
+      clientSignedCert:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org1.hurley.lab/users/User1@org1.hurley.lab/msp/signcerts/User1@org1.hurley.lab-cert.pem
+  admin.org1:
+    client:
+      organization: org1MSP
+      credentialStore:
+        path: /Users/yojee/hyperledger-fabric-network/.hfc-org1 
+        cryptoStore:
+          path: /Users/yojee/hyperledger-fabric-network/.hfc-org1
+      clientPrivateKey:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org1.hurley.lab/users/Admin@org1.hurley.lab/msp/keystore/e7228a77ca2d5786e558fb7f6c19e24993e3d2c7573836ab2c2015c76fe6e363_sk
+      clientSignedCert:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org1.hurley.lab/users/Admin@org1.hurley.lab/msp/signcerts/Admin@org1.hurley.lab-cert.pem
+
+  
+  user1.org2:
+    client:
+      organization: org2MSP
+      credentialStore:
+        path: /Users/yojee/hyperledger-fabric-network/.hfc-org2 
+        cryptoStore:
+          path: /Users/yojee/hyperledger-fabric-network/.hfc-org2
+      clientPrivateKey:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org2.hurley.lab/users/User1@org2.hurley.lab/msp/keystore/7b7ab45e19d246d6b8cf564352322a4edb1e7d160e5d73389ac411eaf76c417d_sk
+      clientSignedCert:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org2.hurley.lab/users/User1@org2.hurley.lab/msp/signcerts/User1@org2.hurley.lab-cert.pem
+  admin.org2:
+    client:
+      organization: org1MSP
+      credentialStore:
+        path: /Users/yojee/hyperledger-fabric-network/.hfc-org2
+        cryptoStore:
+          path: /Users/yojee/hyperledger-fabric-network/.hfc-org2
+      clientPrivateKey:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org2.hurley.lab/users/Admin@org2.hurley.lab/msp/keystore/8537eaa2f9e456885009fe9f0111479758e6f26899c11b8655cc43e81c8addf2_sk
+      clientSignedCert:
+        path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org2.hurley.lab/users/Admin@org2.hurley.lab/msp/signcerts/Admin@org2.hurley.lab-cert.pem
+channels:
+  ch1:
+    created: true
+    definition:
+      capabilities: []
+      consortium: "SampleConsortium"
+      msps: ["org1MSP", "org2MSP"]
+      version: 0
+    orderers:
+      - orderer.hurley.lab
+    peers:
+      peer0.org1.hurley.lab:
+        eventSource: true
+        endorsingPeer: true
+        ledgerQuery: true
+        chaincodeQuery: true
+      peer0.org2.hurley.lab:
+        eventSource: true
+        endorsingPeer: true
+        ledgerQuery: true
+        chaincodeQuery: true
+
+    chaincodes:
+    - id: document
+      version: v0
+      language: node
+      path: src/contract/fabric/document/node/chaincode-document
+
+organizations:
+  org1MSP:
+    mspid: org1MSP
+    peers:
+      -  peer0.org1.hurley.lab
+    certificateAuthorities:
+      - ca.org1.hurley.lab
+    adminPrivateKey:
+      path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org1.hurley.lab/users/Admin@org1.hurley.lab/msp/keystore/e7228a77ca2d5786e558fb7f6c19e24993e3d2c7573836ab2c2015c76fe6e363_sk
+    signedCert:
+      path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org1.hurley.lab/users/Admin@org1.hurley.lab/msp/signcerts/Admin@org1.hurley.lab-cert.pem
+
+  org2MSP:
+    mspid: org2MSP
+    peers:
+      - peer0.org2.hurley.lab
+    certificateAuthorities:
+      - ca.org2.hurley.lab
+    adminPrivateKey:
+      path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org2.hurley.lab/users/Admin@org2.hurley.lab/msp/keystore/8537eaa2f9e456885009fe9f0111479758e6f26899c11b8655cc43e81c8addf2_sk
+    signedCert:
+      path: /Users/yojee/hyperledger-fabric-network/artifacts/crypto-config/peerOrganizations/org2.hurley.lab/users/Admin@org2.hurley.lab/msp/signcerts/Admin@org2.hurley.lab-cert.pem
+
+orderers:
+  orderer.hurley.lab:
+    url: grpc://localhost:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.hurley.lab
+      grpc-max-send-message-length: -1
+
+peers:
+  peer0.org1.hurley.lab:
+    url: grpc://localhost:7051
+    grpcOptions:
+      sl-target-name-override: peer0.org1.hurley.lab
+      grpc.keepalive_time_ms: 600000
+
+  peer0.org2.hurley.lab:
+    url: grpc://localhost:7151
+    grpcOptions:
+      ssl-target-name-override: peer0.org2.hurley.lab
+      grpc.keepalive_time_ms: 600000
+certificateAuthorities:
+  ca.org1.hurley.lab:
+    url: http://localhost:7054
+    httpOptions:
+      verify: false
+    registrar:
+    - enrollId: admin
+      enrollSecret: adminpw
+
+  ca.org2.hurley.lab:
+    url: http://localhost:7154
+    httpOptions:
+      verify: false
+    registrar:
+    - enrollId: admin
+      enrollSecret: adminpw
